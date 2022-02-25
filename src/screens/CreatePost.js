@@ -1,29 +1,39 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-crop-picker';
 
-const CreatePost = () => {
-  const reference = storage().ref('images');
-const pickImage = () =>{
-  ImagePicker.openPicker({
-    width: 300,
-    height: 400,
-    cropping: true
-  }).then(image => {
-    console.log(image);
-  });
-} 
 
-  const storeImage = async () =>{
-    console.log("imagestore.png")
-    await reference.putFile("C:\Users\Etech\Downloads\frame.png/imagestore.png");
+const CreatePost = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const pickImage = async () => {
+    setIsLoading(true);
+    console.log("pickImageFunction")
+    try {
+      console.log("pickImageFunction TRY BLOCK")
+      let image = await ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true
+      })
+      let fileNameArray = image.path.split("/")
+      let fileName = `${fileNameArray[fileNameArray.length - 1]}`
+      console.log(fileName, '::fileName')
+      const reference = storage().ref(`${fileName}`);
+      let task = await reference.putFile(`${image.path}`);
+      console.log(image, '________________', task)
+      setIsLoading(false)
+    } catch (e) {
+      setIsLoading(false)
+      console.log(e, '::ERROR')
+    }
   }
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.signUpOnLogin} onPress={pickImage}>
-          <Text style={styles.signUpOnLoginText}>Create Post</Text>
+      <TouchableOpacity style={styles.signUpOnLogin} onPress={pickImage} disabled={isLoading}>
+        <Text style={styles.signUpOnLoginText}>{isLoading ? "Please wait" : "Create Post"}</Text>
       </TouchableOpacity>
     </View>
   )
@@ -32,20 +42,20 @@ const pickImage = () =>{
 export default CreatePost
 
 const styles = StyleSheet.create({
-    container:{
-        display : "flex",
-        flexDirection : "row",
-        alignItems : "center",
-        justifyContent : "center",
-        height : "100%"
-    },
-    signUpOnLogin: {
-        backgroundColor : "#1a73e8",
-        padding : 15
-      },
-      signUpOnLoginText: {
-        fontSize: 15,
-        color: "#fff",
-        textAlign :"center"
-      },
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%"
+  },
+  signUpOnLogin: {
+    backgroundColor: "#1a73e8",
+    padding: 15
+  },
+  signUpOnLoginText: {
+    fontSize: 15,
+    color: "#fff",
+    textAlign: "center"
+  },
 })
