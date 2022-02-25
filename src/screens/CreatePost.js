@@ -3,7 +3,9 @@ import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-crop-picker';
+import firestore from '@react-native-firebase/firestore';
 
+// const usersCollection = firestore().collection('Users');
 
 const CreatePost = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +25,9 @@ const CreatePost = () => {
       console.log(fileName, '::fileName')
       const reference = storage().ref(`${fileName}`);
       let task = await reference.putFile(`${image.path}`);
-      console.log(image, '________________', task)
+
+      const userDocument = await firestore().collection('Users').add({imageName :task.metadata.name , public : false});
+      console.log(image, '________________', task , userDocument)
       setIsLoading(false)
     } catch (e) {
       setIsLoading(false)

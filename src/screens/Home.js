@@ -2,10 +2,13 @@ import { StyleSheet, Text, View, Image, Touchable } from 'react-native'
 import React, {useEffect , useState} from 'react'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import storage from '@react-native-firebase/storage';
+import database, { firebase } from '@react-native-firebase/database';
+import firestore from '@react-native-firebase/firestore';
 
 const Home = () => {
   const [imageUrl , setImageUrl] = useState("")
   useEffect(() => {
+    getDataFromFireStore();
     storage()
       .ref('/' + '15c39174-9a85-4c1b-8a2f-3b73eb4ec6a3.jpg') //name in storage in firebase console
       .getDownloadURL()
@@ -14,6 +17,22 @@ const Home = () => {
       })
       .catch((e) => console.log('Errors while downloading => ', e));
   }, []);
+
+
+  const getDataFromFireStore = async () => {
+    const usersCollection = firestore().collection('Users');
+    const res = await usersCollection.get()
+    // res.forEach((rest)=>{
+    //     setUserData(rest)
+
+    // })
+    console.log(res.docs)
+  // setUserData(res._docs)
+}
+
+
+
+
 
   return (
     <View>
