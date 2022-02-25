@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import auth from '@react-native-firebase/auth';
 import React, { useState } from 'react'
 
 const SignupPage = ({navigation}) => {
@@ -15,18 +16,35 @@ const SignupPage = ({navigation}) => {
     })
   }
 
-  const handleLogin = () => {
-    if (SignUpDetails.email && SignUpDetails.password) {
-      console.log(SignUpDetails.email, SignUpDetails.password);
-      setSignUpDetails({
-        email: "",
-        password: "",
-        confirm :""
-      })
-    }
-  }
 
-  console.log(SignUpDetails, "jfajfhnksfnakjs")
+  const handleFormSubmit = ()=>{
+    if(SignUpDetails.email && SignUpDetails.password && SignUpDetails.confirm){
+        if(SignUpDetails.password === SignUpDetails.confirm){
+            firebaseAuthentication(SignUpDetails.email ,SignUpDetails.password )
+        }
+        setSignUpDetails({
+          email: "",
+          password: "",
+          confirm :""
+        })
+    }
+}
+
+const firebaseAuthentication = async (email , password ) => {
+    console.log('responseresponseresponseresponse________________firebaseAuthentication');
+    const response = await auth().createUserWithEmailAndPassword(email.trim() , password)
+    try{
+        if(response){
+            console.log('User account created!');
+            navigation.navigate('LoginPage');
+        }
+        // setLoading(false)
+    }catch{
+        console.log('That email address is already in use!');
+        // setLoading(false)
+    } 
+  }; 
+
   return (
     <View style={styles.container} >
       <Text style={styles.HeaderBtnText}>SignUp page</Text>
@@ -51,7 +69,7 @@ const SignupPage = ({navigation}) => {
         onChangeText={(e) => handleUserDetails(e, "confirm")}
       />
       <View style={styles.btnContainer}>
-      <TouchableOpacity onPress={handleLogin}
+      <TouchableOpacity onPress={handleFormSubmit}
         style={styles.logiButton}
       >
         <Text style={styles.loginBtnText}>SignUp</Text>
