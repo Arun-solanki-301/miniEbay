@@ -20,7 +20,7 @@ const App = () => {
       <Stack.Navigator screenOptions={{headerTitle: 'Test', headerShown: false}}>
         <Stack.Screen name="LoginPage" component={LoginPage} />
         <Stack.Screen name="SignupPage" component={SignupPage} />
-        <Stack.Screen name="tabs" component={tabNavigation} />
+        <Stack.Screen name="tabs" component={TabNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
     // </View>
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({})
 
 
 
-const tabNavigation = () => {
+const TabNavigation = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={Home} />

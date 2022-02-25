@@ -13,6 +13,7 @@ const LoginPage = ({ navigation }) => {
     const getUserName = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
+        console.log(token , "token........")
         if (token !== null) {
           navigation.navigate("tabs")
         }
@@ -47,7 +48,7 @@ const LoginPage = ({ navigation }) => {
 
   const firebaseAuthentication = async (email, password) => {
     console.log('responseresponseresponseresponse________________firebaseAuthentication',);
-    const response = await auth().signInWithEmailAndPassword(email.trim(), password)
+    const response = await auth().signInWithEmailAndPassword(email, password)
     try {
       // setLoading(false)
       if (response) {
@@ -84,6 +85,7 @@ const LoginPage = ({ navigation }) => {
         style={styles.textInput}
         placeholder='Password'
         value={loginDetails.password}
+        secureTextEntry={true}
         onChangeText={(e) => handleUserDetails(e, "password")}
       />
       <View style={styles.btnContainer}>
@@ -95,7 +97,7 @@ const LoginPage = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.signUpOnLogin}
-        onPress={() => navigation.navigate("tabs")}
+        onPress={() => navigation.navigate("SignupPage")}
       >
         <Text style={styles.signUpOnLoginText}>
           new user? sign up instead

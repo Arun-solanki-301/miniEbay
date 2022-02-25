@@ -59,6 +59,7 @@ const firebaseAuthentication = async (email , password ) => {
       style={styles.textInput}
         placeholder='Password'
         value={SignUpDetails.password}
+        secureTextEntry={true}
         onChangeText={(e) => handleUserDetails(e, "password")}
       />
 
@@ -66,6 +67,7 @@ const firebaseAuthentication = async (email , password ) => {
       style={styles.textInput}
         placeholder='confirm password'
         value={SignUpDetails.confirm}
+        secureTextEntry={true}
         onChangeText={(e) => handleUserDetails(e, "confirm")}
       />
       <View style={styles.btnContainer}>
