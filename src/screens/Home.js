@@ -1,12 +1,24 @@
 import { StyleSheet, Text, View, Image, Touchable } from 'react-native'
-import React from 'react'
+import React, {useEffect , useState} from 'react'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
+import storage from '@react-native-firebase/storage';
 
 const Home = () => {
+  const [imageUrl , setImageUrl] = useState("")
+  useEffect(() => {
+    storage()
+      .ref('/' + '15c39174-9a85-4c1b-8a2f-3b73eb4ec6a3.jpg') //name in storage in firebase console
+      .getDownloadURL()
+      .then((url) => {
+        setImageUrl(url);
+      })
+      .catch((e) => console.log('Errors while downloading => ', e));
+  }, []);
+
   return (
     <View>
       <View>
-          <Image style={{height : 200, width :"100%"}} source={{uri : "https://upload.wikimedia.org/wikipedia/commons/a/a7/Post_Box_of_India.jpg"}} />
+          <Image style={{height : 200, width :"100%"}} source={{uri : imageUrl}} />
             <View style={styles.commentSection}>
             <TextInput placeholder='comment here' style={styles.commentSectionInput} />
             <TouchableOpacity style={styles.signUpOnLogin}>
