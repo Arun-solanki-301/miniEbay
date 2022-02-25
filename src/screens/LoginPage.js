@@ -50,7 +50,7 @@ const LoginPage = ({navigation}) => {
       </View>
       <TouchableOpacity
           style={styles.signUpOnLogin}
-          onPress={() => navigation.navigate("SignupPage")}
+          onPress={() => navigation.navigate("tabs")}
         >
           <Text style={styles.signUpOnLoginText}>
             new user? sign up instead
