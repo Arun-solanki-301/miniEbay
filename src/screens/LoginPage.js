@@ -1,75 +1,66 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 
-const SignupPage = () => {
-  const [SignUpDetails, setSignUpDetails] = useState({
+const LoginPage = ({navigation}) => {
+  const [loginDetails, setLoginDetails] = useState({
     email: "",
-    password: "",
-    confirm : ""
+    password: ""
   })
 
   const handleUserDetails = (value, key) => {
-    setSignUpDetails({
-      ...SignUpDetails,
+    setLoginDetails({
+      ...loginDetails,
       [key]: value
     })
   }
 
   const handleLogin = () => {
-    if (SignUpDetails.email && SignUpDetails.password) {
-      console.log(SignUpDetails.email, SignUpDetails.password);
-      setSignUpDetails({
+    if (loginDetails.email && loginDetails.password) {
+      console.log(loginDetails.email, loginDetails.password);
+      setLoginDetails({
         email: "",
-        password: "",
-        confirm :""
+        password: ""
       })
     }
   }
 
-  console.log(SignUpDetails, "jfajfhnksfnakjs")
+  console.log(loginDetails, "jfajfhnksfnakjs")
   return (
     <View style={styles.container} >
-      <Text style={styles.HeaderBtnText}>SignUp page</Text>
+      <Text style={styles.HeaderBtnText}>Login page</Text>
       <TextInput
         style={styles.textInput}
         placeholder='Enter Email'
-        value={SignUpDetails.email}
+        value={loginDetails.email}
         onChangeText={(e) => handleUserDetails(e, "email")}
       />
 
       <TextInput
       style={styles.textInput}
         placeholder='Password'
-        value={SignUpDetails.password}
+        value={loginDetails.password}
         onChangeText={(e) => handleUserDetails(e, "password")}
-      />
-
-      <TextInput
-      style={styles.textInput}
-        placeholder='confirm password'
-        value={SignUpDetails.confirm}
-        onChangeText={(e) => handleUserDetails(e, "confirm")}
       />
       <View style={styles.btnContainer}>
       <TouchableOpacity onPress={handleLogin}
         style={styles.logiButton}
       >
-        <Text style={styles.loginBtnText}>SignUp</Text>
+        <Text style={styles.loginBtnText}>Login</Text>
       </TouchableOpacity>
       </View>
       <TouchableOpacity
           style={styles.signUpOnLogin}
-          // onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("SignupPage")}
         >
           <Text style={styles.signUpOnLoginText}>
-            already a user? login instead
+            new user? sign up instead
           </Text>
         </TouchableOpacity>
     </View>
   )
 }
 
-export default SignupPage
+export default LoginPage
 
 const styles = StyleSheet.create({
   container: {
