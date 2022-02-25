@@ -2,57 +2,59 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import React, { useState } from 'react'
 
 const SignupPage = () => {
-  const [loginDetails, setLoginDetails] = useState({
+  const [SignUpDetails, setSignUpDetails] = useState({
     email: "",
-    password: ""
+    password: "",
+    confirm : ""
   })
 
   const handleUserDetails = (value, key) => {
-    setLoginDetails({
-      ...loginDetails,
+    setSignUpDetails({
+      ...SignUpDetails,
       [key]: value
     })
   }
 
   const handleLogin = () => {
-    if (loginDetails.email && loginDetails.password) {
-      console.log(loginDetails.email, loginDetails.password);
-      setLoginDetails({
+    if (SignUpDetails.email && SignUpDetails.password) {
+      console.log(SignUpDetails.email, SignUpDetails.password);
+      setSignUpDetails({
         email: "",
-        password: ""
+        password: "",
+        confirm :""
       })
     }
   }
 
-  console.log(loginDetails, "jfajfhnksfnakjs")
+  console.log(SignUpDetails, "jfajfhnksfnakjs")
   return (
     <View style={styles.container} >
       <Text style={styles.HeaderBtnText}>SignUp page</Text>
       <TextInput
         style={styles.textInput}
         placeholder='Enter Email'
-        value={loginDetails.email}
+        value={SignUpDetails.email}
         onChangeText={(e) => handleUserDetails(e, "email")}
       />
 
       <TextInput
       style={styles.textInput}
         placeholder='Password'
-        value={loginDetails.password}
+        value={SignUpDetails.password}
         onChangeText={(e) => handleUserDetails(e, "password")}
       />
 
       <TextInput
       style={styles.textInput}
-        placeholder='Password'
-        value={loginDetails.password}
-        onChangeText={(e) => handleUserDetails(e, "password")}
+        placeholder='confirm password'
+        value={SignUpDetails.confirm}
+        onChangeText={(e) => handleUserDetails(e, "confirm")}
       />
       <View style={styles.btnContainer}>
       <TouchableOpacity onPress={handleLogin}
         style={styles.logiButton}
       >
-        {/* <Text style={styles.loginBtnText}>SignUp</Text> */}
+        <Text style={styles.loginBtnText}>SignUp</Text>
       </TouchableOpacity>
       </View>
       <TouchableOpacity
