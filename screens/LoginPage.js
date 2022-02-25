@@ -48,6 +48,14 @@ const LoginPage = () => {
         <Text style={styles.loginBtnText}>Login</Text>
       </TouchableOpacity>
       </View>
+      <TouchableOpacity
+          style={styles.signUpOnLogin}
+          // onPress={() => navigation.navigate("Register")}
+        >
+          <Text style={styles.signUpOnLoginText}>
+            new user? sign up instead
+          </Text>
+        </TouchableOpacity>
     </View>
   )
 }
@@ -82,6 +90,14 @@ const styles = StyleSheet.create({
   loginBtnText :{
     textAlign:"center",
     color:"#fff",
-  }
+  },
+  signUpOnLogin: {
+    marginTop: 15,
+  },
+  signUpOnLoginText: {
+    fontSize: 15,
+    color: "#1a73e8",
+    textAlign :"center"
+  },
 
 })
