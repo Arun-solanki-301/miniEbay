@@ -2,9 +2,18 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import storage from '@react-native-firebase/storage';
+// import ImagePicker from 'react-native-image-crop-picker';
 
 const CreatePost = () => {
   const reference = storage().ref('images');
+
+  // ImagePicker.openPicker({
+  //   width: 300,
+  //   height: 400,
+  //   cropping: true
+  // }).then(image => {
+  //   console.log(image);
+  // });
 
   const storeImage = async () =>{
     console.log("imagestore.png")

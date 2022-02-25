@@ -4950,6 +4950,11 @@
   "resolved" "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz"
   "version" "1.2.4"
 
+"link@^0.1.5":
+  "integrity" "sha1-f8eqW9P2rFoZxSVaI/QgfWhS6S4="
+  "resolved" "https://registry.npmjs.org/link/-/link-0.1.5.tgz"
+  "version" "0.1.5"
+
 "locate-path@^3.0.0":
   "integrity" "sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A=="
   "resolved" "https://registry.npmjs.org/locate-path/-/locate-path-3.0.0.tgz"
@@ -6151,6 +6156,11 @@
   dependencies:
     "react-native-codegen" "*"
 
+"react-native-image-crop-picker@^0.37.3":
+  "integrity" "sha512-ih+0pWWRUNEFQyaHwGbH9rqJNOb7EBYMwKJhTY0VmsKIA9E+usfwMmQXAFIfOnee7fTn0A2vOXkBCPQZwyvnQw=="
+  "resolved" "https://registry.npmjs.org/react-native-image-crop-picker/-/react-native-image-crop-picker-0.37.3.tgz"
+  "version" "0.37.3"
+
 "react-native-image-picker@^4.7.3":
   "integrity" "sha512-eRKm4wlsmZHmsWFyv77kYc2F+ZyEVqe0m7mqhsMzWk6TQT4FBDtEDxmRDDFq+ivCu/1QD+EPhmYcAIpeGr7Ekg=="
   "resolved" "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.7.3.tgz"
@@ -6170,7 +6180,7 @@
     "react-native-gradle-plugin" "^0.0.3"
     "warn-once" "^0.1.0"
 
-"react-native@*", "react-native@0.67.3":
+"react-native@*", "react-native@^0.67.3", "react-native@>=0.40.0":
   "integrity" "sha512-epMVRMRH7dLCis97+YwiV4dmTVZO6qKmQgwcTNcxVt/kEMxAa+OYK7h81+99/n7XCeMFk/U2zYOBuQqc7c5Amg=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.67.3.tgz"
   "version" "0.67.3"
