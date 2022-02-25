@@ -6,13 +6,13 @@ const HomeComponent = (props) => {
   return (
     <View>
        <View>
-          <Image style={{height : 200, display:"flex", flexDirection : "row", justifyContent : "center"}} source={{uri : props.imageUrl}} />
-            <View style={styles.commentSection}>
+          <Image style={{height : 200, display:"flex", flexDirection : "row", justifyContent : "center", marginBottom :20}} source={{uri : props.imageUrl}} />
+            {/* <View style={styles.commentSection}>
             <TextInput placeholder='comment here' style={styles.commentSectionInput} />
             <TouchableOpacity style={styles.signUpOnLogin}>
                 <Text style={styles.signUpOnLoginText}>send</Text>
             </TouchableOpacity>
-            </View>
+            </View> */}
       </View>
     </View>
   )

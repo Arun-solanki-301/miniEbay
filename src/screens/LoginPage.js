@@ -1,11 +1,30 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import auth from '@react-native-firebase/auth';
+import React, { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginPage = ({navigation}) => {
+const LoginPage = ({ navigation }) => {
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: ""
   })
+
+  useEffect(() => {
+    const getUserName = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        if (token !== null) {
+          navigation.navigate("tabs")
+        }
+      } catch {
+        console.log(error)
+      }
+    }
+
+    getUserName();
+  }, [])
+
+
 
   const handleUserDetails = (value, key) => {
     setLoginDetails({
@@ -14,17 +33,43 @@ const LoginPage = ({navigation}) => {
     })
   }
 
+
   const handleLogin = () => {
     if (loginDetails.email && loginDetails.password) {
-      console.log(loginDetails.email, loginDetails.password);
-      setLoginDetails({
-        email: "",
-        password: ""
-      })
+      // setLoading(true)
+      firebaseAuthentication(loginDetails.email, loginDetails.password)
+    }
+    setLoginDetails({
+      email: "",
+      password: ""
+    })
+  }
+
+  const firebaseAuthentication = async (email, password) => {
+    console.log('responseresponseresponseresponse________________firebaseAuthentication',);
+    const response = await auth().signInWithEmailAndPassword(email.trim(), password)
+    try {
+      // setLoading(false)
+      if (response) {
+        console.log('User account created & signed in!', response?.user?.uid)
+        navigation.navigate("tabs")
+        storage(response?.user?.uid)
+      }
+    } catch {
+      // setLoading(false)
+      console.log("error")
+    }
+  };
+
+  const storage = async (userToken) => {
+    try {
+      await AsyncStorage.setItem('token', String(userToken));
+    } catch (error) {
+      console.log(error)
     }
   }
 
-  console.log(loginDetails, "jfajfhnksfnakjs")
+
   return (
     <View style={styles.container} >
       <Text style={styles.HeaderBtnText}>Login page</Text>
@@ -36,26 +81,26 @@ const LoginPage = ({navigation}) => {
       />
 
       <TextInput
-      style={styles.textInput}
+        style={styles.textInput}
         placeholder='Password'
         value={loginDetails.password}
         onChangeText={(e) => handleUserDetails(e, "password")}
       />
       <View style={styles.btnContainer}>
-      <TouchableOpacity onPress={handleLogin}
-        style={styles.logiButton}
-      >
-        <Text style={styles.loginBtnText}>Login</Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={handleLogin}
+          style={styles.logiButton}
+        >
+          <Text style={styles.loginBtnText}>Login</Text>
+        </TouchableOpacity>
       </View>
       <TouchableOpacity
-          style={styles.signUpOnLogin}
-          onPress={() => navigation.navigate("tabs")}
-        >
-          <Text style={styles.signUpOnLoginText}>
-            new user? sign up instead
-          </Text>
-        </TouchableOpacity>
+        style={styles.signUpOnLogin}
+        onPress={() => navigation.navigate("tabs")}
+      >
+        <Text style={styles.signUpOnLoginText}>
+          new user? sign up instead
+        </Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -64,32 +109,32 @@ export default LoginPage
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal : 15
+    marginHorizontal: 15
   },
-  HeaderBtnText : {
-    fontSize : 25,
-    textAlign : "center",
-    marginVertical : 10
+  HeaderBtnText: {
+    fontSize: 25,
+    textAlign: "center",
+    marginVertical: 10
   },
-  btnContainer : {
-    display : "flex",
-    alignItems : "center",
-    paddingVertical : 15
+  btnContainer: {
+    display: "flex",
+    alignItems: "center",
+    paddingVertical: 15
   },
-  textInput:{
-    borderWidth:1,
-    borderColor : "#1a73e8",
-    borderRadius : 5,
-    marginVertical : 5
+  textInput: {
+    borderWidth: 1,
+    borderColor: "#1a73e8",
+    borderRadius: 5,
+    marginVertical: 5
   },
-  logiButton : {
-    backgroundColor : "#1a73e8",
-    paddingVertical : 10,
-    width : "30%"
+  logiButton: {
+    backgroundColor: "#1a73e8",
+    paddingVertical: 10,
+    width: "30%"
   },
-  loginBtnText :{
-    textAlign:"center",
-    color:"#fff",
+  loginBtnText: {
+    textAlign: "center",
+    color: "#fff",
   },
   signUpOnLogin: {
     marginTop: 15,
@@ -97,7 +142,7 @@ const styles = StyleSheet.create({
   signUpOnLoginText: {
     fontSize: 15,
     color: "#1a73e8",
-    textAlign :"center"
+    textAlign: "center"
   },
 
 })
