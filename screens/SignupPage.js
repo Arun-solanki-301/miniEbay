@@ -52,7 +52,7 @@ const SignupPage = () => {
       <TouchableOpacity onPress={handleLogin}
         style={styles.logiButton}
       >
-        <Text style={styles.loginBtnText}>SignUp</Text>
+        {/* <Text style={styles.loginBtnText}>SignUp</Text> */}
       </TouchableOpacity>
       </View>
       <TouchableOpacity
