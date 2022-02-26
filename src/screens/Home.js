@@ -8,42 +8,36 @@ import firestore from '@react-native-firebase/firestore';
 import HomeComponent from '../components/HomeComponent';
 
 const Home = () => {
-  const [imageUrl , setImageUrl] = useState([])
-  // const [imageUrl1 , setImageUrl1] = useState('')
+  const[PostCollections , setPostCollections] = useState([])
+
   useEffect(() => {
     getDataFromFireStore();
   }, []);
 
 
   const getDataFromFireStore = async () => {
-    const usersCollection = firestore().collection('Users');
+    const usersCollection = firestore().collection('Posts');
     const res = await usersCollection.get()
-    res.forEach((rest)=>{
-    imagesUrl(rest?._data?.imageName)
+    const newArr = res?._docs?.map((rest)=>{
+      return rest?._data
     })
+    setPostCollections(newArr)
 }
 
-const imagesUrl = async (getimages) =>{
-    try{
-      const url = await storage().ref('/' + getimages).getDownloadURL()
-      setImageUrl([...imageUrl , url ]) 
-  }catch(e){
-    console.log(e , "error")
-  }
-}
 
 useFocusEffect(
         useCallback(()=>{
           getDataFromFireStore()
         },[])
     )
-
+  
+    console.log(PostCollections , "post collections...............")
 
   return (
     <ScrollView>
       {
-        imageUrl?.map((item , i)=>{
-           return <HomeComponent imageUrl={item} key={i}/>
+        PostCollections?.map((item , i)=>{
+           return <HomeComponent imageUrl={item?.imageName} publicOrPrivate={item?.private} key={i}/>
         })
       }
     </ScrollView>

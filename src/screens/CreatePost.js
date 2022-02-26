@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Switch } from 'react-native'
 import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import storage from '@react-native-firebase/storage';
@@ -9,6 +9,7 @@ import firestore from '@react-native-firebase/firestore';
 
 const CreatePost = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
 
   const pickImage = async () => {
     setIsLoading(true);
@@ -16,8 +17,8 @@ const CreatePost = () => {
     try {
       console.log("pickImageFunction TRY BLOCK")
       let image = await ImagePicker.openPicker({
-        width: 300,
-        height: 400,
+        width: 400,
+        height: 500,
         cropping: true
       })
       let fileNameArray = image.path.split("/")
@@ -26,8 +27,8 @@ const CreatePost = () => {
       const reference = storage().ref(`${fileName}`);
       let task = await reference.putFile(`${image.path}`);
 
-      const userDocument = await firestore().collection('Users').add({imageName :task.metadata.name , public : false});
-      console.log(image, '________________', task , userDocument)
+      const postDocument = await firestore().collection('Posts').add({imageName :task.metadata.name , private : isEnabled});
+      console.log(image, '________________', task , postDocument)
       setIsLoading(false)
     } catch (e) {
       setIsLoading(false)
@@ -36,6 +37,16 @@ const CreatePost = () => {
   }
   return (
     <View style={styles.container}>
+      <View>
+        <Text>private mode</Text>
+      <Switch
+        trackColor={{ false: "#767577", true: "#81b0ff" }}
+        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+        // ios_backgroundColor="#3e3e3e"
+        onValueChange={()=>setIsEnabled(!isEnabled)}
+        value={isEnabled}
+      />
+      </View>
       <TouchableOpacity style={styles.signUpOnLogin} onPress={pickImage} disabled={isLoading}>
         <Text style={styles.signUpOnLoginText}>{isLoading ? "Please wait" : "Create Post"}</Text>
       </TouchableOpacity>
