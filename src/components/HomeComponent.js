@@ -4,7 +4,7 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import storage from '@react-native-firebase/storage';
 
 const HomeComponent = (props) => {
-  const { imageUrl , publicOrPrivate } = props;
+  const { imageUrl , publicOrPrivate, item } = props;
   const [urlState, setUrl] = useState('')
 
   const imagesUrl = async (imageName) => {
@@ -12,7 +12,6 @@ const HomeComponent = (props) => {
       const url = await storage().ref('/' + imageName).getDownloadURL()
       console.log(url)
       setUrl(url)
-      return url;
     } catch (e) {
       console.log(e, "error")
     }
@@ -22,19 +21,23 @@ const HomeComponent = (props) => {
     imagesUrl(imageUrl)
   }, [imageUrl])
 
-  console.log("prpublicOrPrivate" , publicOrPrivate)
+  console.log("prpublicOrPrivate" , item)
 
   return (
-    <View>
+    <View style={{marginBottom:16,paddingHorizontal:15,marginTop:16}}>
       {publicOrPrivate ? null :
       <View>
-        <Image style={{ height: 500, display: "flex", flexDirection: "row", justifyContent: "center", marginBottom: 20 }} source={{ uri: urlState }} />
-        {/* <View style={styles.commentSection}>
-            <TextInput placeholder='comment here' style={styles.commentSectionInput} />
-            <TouchableOpacity style={styles.signUpOnLogin}>
-                <Text style={styles.signUpOnLoginText}>send</Text>
-            </TouchableOpacity>
-            </View> */}
+        <Image style={{ height: 500, display: "flex", flexDirection: "row", justifyContent: "center", marginBottom: 20,borderRadius:5 }} source={{ uri: urlState }} />
+        <View>
+          <Text style={{fontWeight:'600',fontSize:22,letterSpacing:1,textTransform:'capitalize',color:'#1a73e8'}}>{item.description.title}</Text>
+          <Text style={{fontSize:18,paddingVertical:2}}>₹ {item.description.rate}</Text>
+          <Text>
+            Description : 
+            </Text>
+          <Text>         
+            {item.description.description}
+            </Text>
+        </View>
       </View>}
     </View>
   )

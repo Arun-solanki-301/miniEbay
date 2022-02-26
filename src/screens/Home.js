@@ -14,7 +14,6 @@ const Home = () => {
     getDataFromFireStore();
   }, []);
 
-
   const getDataFromFireStore = async () => {
     const usersCollection = firestore().collection('Posts');
     const res = await usersCollection.get()
@@ -24,20 +23,17 @@ const Home = () => {
     setPostCollections(newArr)
 }
 
-
 useFocusEffect(
         useCallback(()=>{
           getDataFromFireStore()
         },[])
     )
-  
-    console.log(PostCollections , "post collections...............")
 
   return (
     <ScrollView>
       {
         PostCollections?.map((item , i)=>{
-           return <HomeComponent imageUrl={item?.imageName} publicOrPrivate={item?.private} key={i}/>
+           return <HomeComponent imageUrl={item?.imageName} publicOrPrivate={item?.private} item={item} key={i}/>
         })
       }
     </ScrollView>
