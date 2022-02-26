@@ -69,6 +69,7 @@ const CreatePost = () => {
       setIsImageLoading(false)
       } catch (error) {
         setIsLoading(false);
+      setIsImageLoading(false)
         console.log(error , "error in send details")
       }
   }

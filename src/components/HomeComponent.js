@@ -28,16 +28,16 @@ const HomeComponent = (props) => {
       {publicOrPrivate ? null :
       <View>
         <Image style={{ height: 500, display: "flex", flexDirection: "row", justifyContent: "center", marginBottom: 20,borderRadius:5 }} source={{ uri: urlState }} />
-        <View>
-          <Text style={{fontWeight:'600',fontSize:22,letterSpacing:1,textTransform:'capitalize',color:'#1a73e8'}}>{item.description.title}</Text>
-          <Text style={{fontSize:18,paddingVertical:2}}>₹ {item.description.rate}</Text>
+        {item?.description && <View>
+          <Text style={{fontWeight:'600',fontSize:22,letterSpacing:1,textTransform:'capitalize',color:'#1a73e8'}}>{item?.description?.title}</Text>
+          <Text style={{fontSize:18,paddingVertical:2}}>₹ {item?.description?.rate}</Text>
           <Text>
             Description : 
             </Text>
           <Text>         
-            {item.description.description}
+            {item?.description?.description}
             </Text>
-        </View>
+        </View>}
       </View>}
     </View>
   )
