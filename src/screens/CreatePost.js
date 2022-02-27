@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, Switch } from 'react-native'
 import React, { useState } from 'react'
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
+import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-crop-picker';
 import firestore from '@react-native-firebase/firestore';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 // const usersCollection = firestore().collection('Users');
 
@@ -28,8 +29,6 @@ const CreatePost = () => {
   }
 
   const pickImage = async () => {
-    setIsImageLoading(true);
-    console.log("pickImageFunction")
     try {
       console.log("pickImageFunction TRY BLOCK")
       let image = await ImagePicker.openPicker({
@@ -42,7 +41,8 @@ const CreatePost = () => {
       console.log(fileName, '::fileName')
       setImgName(fileName);
       setImagePath(image)
-
+      setIsImageLoading(true);
+      
     } catch (e) {
       setIsImageLoading(false)
       console.log(e, '::ERROR')
@@ -75,7 +75,7 @@ const CreatePost = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       
       <View>
       <TextInput
@@ -101,19 +101,20 @@ const CreatePost = () => {
         <Text>private mode</Text>
       <Switch
         trackColor={{ false: "#767577", true: "#81b0ff" }}
-        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+        thumbColor={isEnabled ? "#1a73e8" : "#f4f3f4"}
         // ios_backgroundColor="#3e3e3e"
         onValueChange={()=>setIsEnabled(!isEnabled)}
         value={isEnabled}
       />
       </View>
-      <TouchableOpacity style={styles.signUpOnLogin} onPress={pickImage} disabled={isImageLoading}>
-        <Text style={styles.signUpOnLoginText}>{isImageLoading ? "image selected" : "select Image"}</Text>
+      <TouchableOpacity style={styles.uploadBtn} onPress={pickImage}>
+        {!isImageLoading && <Icon name="upload" color={"#1a73e8"} size={25} />}
+        <Text style={styles.uploadBtnText}>{isImageLoading ? "image uploaded" : "upload image"}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.sendBtn} onPress={sendDetails}>
         <Text style={styles.signUpOnLoginText}>{isLoading ? "Please wait" : "post"}</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -152,5 +153,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#1a73e8",
     padding: 15,
     marginVertical :15
+  },
+  uploadBtn :{
+    borderWidth: 2,
+    borderColor: "#1a73e8",
+    padding: 10,
+    borderRadius :5,
+    display : "flex",
+    flexDirection : "row",
+    justifyContent : 'center',
+    alignItems :"center",
+    marginTop : 15
+  },
+  uploadBtnText : {
+    fontSize : 20,
+    marginLeft : 10
   }
 })

@@ -107,7 +107,7 @@ const LoginPage = ({ navigation }) => {
   )
 }
 
-export default LoginPage
+export default LoginPage;
 
 const styles = StyleSheet.create({
   container: {
