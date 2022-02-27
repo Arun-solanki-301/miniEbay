@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
   },
   uploadBtnText : {
     fontSize : 20,
-    marginLeft : 10
+    marginLeft : 10,
+    color : "#1a73e8"
   }
 })
